@@ -1,10 +1,11 @@
 const { connect } = require('./client');
-
+const { setupInput } = require('./input');
 const net = require('net');
 
-/**
- * Establishes connection with the game server
- */
-
 console.log('Connecting ...');
-connect();
+
+// connect();
+
+setupInput(connect());
+
+// module.exports = connect();
