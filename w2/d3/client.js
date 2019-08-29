@@ -17,9 +17,11 @@ const connect = function () {
 
   conn.on('connect', () => { conn.write('Name: BRK') });
 
-  setInterval(() => {
-    conn.write("Move: up");
-  }, 1000);
+  conn.on('connect', () => { conn.write('Say: Hello friends!') });
+
+  // setInterval(() => {
+  //   conn.write("Move: up");
+  // }, 1000);
 
   return conn;
 

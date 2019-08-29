@@ -1,8 +1,28 @@
-let connection;
+let currentKey = "w";
+
+let directions = {
+  w: {
+    direction: "Move: up",
+    opposite: "s"
+  },
+  a: {
+    direction: "Move: left",
+    opposite: "d",
+  },
+  s: {
+    direction: "Move: down",
+    opposite: "w"
+  },
+  d: {
+    direction: "Move: right",
+    opposite: "a"
+  }
+};
+
 
 const setupInput = function (conn) {
-
-  connection = conn;
+  
+  const directionsSet = new Set(["w","a","s","d"]);
   const stdin = process.stdin;
   stdin.setRawMode(true);
   stdin.setEncoding('utf8');
@@ -13,22 +33,17 @@ const setupInput = function (conn) {
     if (key === "\u0003") {
       process.exit();
     }
-    if (key === "w") { // letter w, up
-      conn.write("Move: up");
+
+    if (directionsSet.has(key) && key !== currentKey && key !== directions[currentKey].opposite) {
+      currentKey = key;
     }
-    if (key === "a") {   // letter a, left
-      conn.write("Move: left");
-    }
-    if (key === "d") { // letter d, right
-      conn.write("Move: right");
-    }
-    if (key === "s") { // letter s, down
-      conn.write("Move: down");
-    }
-  }
+  };
+
+  setInterval(() => {
+    conn.write(directions[currentKey].direction);
+  }, 1000);
 
   return stdin;
-
 };
 
 module.exports = { setupInput };
